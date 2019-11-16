@@ -34,7 +34,7 @@ class aStar{
 
                 let gCost = currentNode.gCost + currentNode.position.distance(neighbour.position);
                 if(gCost < neighbour.gCost){
-                    this.nodeList[currentNode.neighbours[i]].setState('vis');
+                    this.nodeList[currentNode.neighbours[i]].setState(NodeType.VIS);
                     this.nodeList[currentNode.neighbours[i]].gCost = gCost;
                     this.nodeList[currentNode.neighbours[i]].hCost = this.getHCost(neighbour);
                     this.nodeList[currentNode.neighbours[i]].parent = currentNode;

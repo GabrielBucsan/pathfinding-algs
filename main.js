@@ -54,15 +54,15 @@ $(document).ready(()=>{
             nodeList[i].resetNode();
         }
 
-        nodeList[getNodeIndex(startPosition)].setState('start');
-        nodeList[getNodeIndex(endPosition)].setState('end');
+        nodeList[getNodeIndex(startPosition)].setState(NodeType.START);
+        nodeList[getNodeIndex(endPosition)].setState(NodeType.END);
         const a = new aStar(nodeList, startPosition, endPosition, mapSize);
         let path = a.run();
     
         if(path != null){
             for (let i = 0; i < path.length; i++) {
                 let index = getNodeIndex(path[i].position);
-                nodeList[index].setState('path');
+                nodeList[index].setState(NodeType.PATH);
             }
         }
     
