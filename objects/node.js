@@ -46,17 +46,21 @@ class Node{
     }
 
     draw(){
+        let color;
         if(this.state == 'start'){
-            this.c.fillStyle = '#00ff00';
+            color = '#fff421';
         }else if(this.state == 'end'){
-            this.c.fillStyle = '#0000ff';
+            color = '#0000ff';
         }else if(this.state == 'path'){
-            this.c.fillStyle = '#ffff00'
+            color = '#ff2626'
         }else if(this.state == 'vis'){
-            this.c.fillStyle = '#ff0000';
+            color = 'rgba(209, 175, 243, 0.51)';
         }else{
-            this.c.fillStyle = (this.passable)? '#ffffff' : '#000000';
+            color = (this.passable)? '#323232' : '#000000';
         }
-        this.c.fillRect(this.position.x * this.size, this.position.y * this.size, this.size, this.size);
+        if(color != '#323232'){
+            this.c.fillStyle = color;
+            this.c.fillRect(this.position.x * this.size, this.position.y * this.size, this.size, this.size);
+        }
     }
 }
