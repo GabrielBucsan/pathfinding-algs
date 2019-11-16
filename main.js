@@ -1,25 +1,44 @@
 $(document).ready(()=>{
-    
-    const mapSize = new Vector(300, 120);
+
     const nodeSize = 5;
+    let windowSize = new Vector(window.innerWidth - 300, window.innerHeight);
+    
+    windowSize.x = windowSize.x - (windowSize.x % nodeSize);
+    windowSize.y = windowSize.y - (windowSize.y % nodeSize);
+
+    const mapSize = new Vector(windowSize.x / nodeSize, windowSize.y / nodeSize);
     const canvas = new Canvas(nodeSize * mapSize.x, nodeSize * mapSize.y);
     const c = canvas.context;
     const map = new NodeMap(c, mapSize, nodeSize);
 
-    function runAlg(){
+    const algorithm = $('#algorithm');
+    let selectedAlgorithm = algorithm[0].value;
+
+    $('#algorithm').on('input', function () {
+        selectedAlgorithm = algorithm[0].value;
+        run();
+    });
+
+    function run(){
 
         map.resetMap();
 
-        const a = new aStar(map);
-        let path = a.run();
-    
-        if(path != null){
-            map.setPath(path);
+        let alg;
+        if(selectedAlgorithm == 'A'){
+            alg = new AStar(map);
+        }else if(selectedAlgorithm == 'D'){
+            alg = new Dijkstra(map);
         }
-    
+        if(alg){
+            let path = alg.run();
+        
+            if(path != null){
+                map.setPath(path);
+            }
+        }
         canvas.update();
         map.renderMap();
     }
 
-    runAlg();
+    run();
 });

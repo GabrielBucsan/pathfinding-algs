@@ -1,4 +1,4 @@
-class AStar{
+class Dijkstra{
     constructor(map){
         this.map = map;
 
@@ -14,7 +14,6 @@ class AStar{
 
         let startNodeIndex = this.map.getNodeIndex(this.start);
         this.nodeList[startNodeIndex].gCost = 0;
-        this.nodeList[startNodeIndex].hCost = this.getHCost(this.nodeList[startNodeIndex]);
 
         this.opened.push(this.nodeList[startNodeIndex]);
 
@@ -38,7 +37,6 @@ class AStar{
                 if(gCost < neighbour.gCost){
                     this.nodeList[currentNode.neighbours[i]].setState(NodeType.VIS);
                     this.nodeList[currentNode.neighbours[i]].gCost = gCost;
-                    this.nodeList[currentNode.neighbours[i]].hCost = this.getHCost(neighbour);
                     this.nodeList[currentNode.neighbours[i]].parent = currentNode;
                     
                     if(!this.opened.includes(neighbour)){
@@ -61,18 +59,12 @@ class AStar{
         return path;
     }
 
-    getHCost(node){
-        let difX = this.end.x - node.position.x;
-        let difY = this.end.y - node.position.y;
-        return Math.sqrt(difX * difX + difY * difY);
-    }
-
     getIndexLowestCost(){
         let lowestCost = Infinity;
         let nodeIndex;
         for (let i = 0; i < this.opened.length; i++) {
-            if(this.opened[i].fCost() < lowestCost){
-                lowestCost = this.opened[i].fCost();
+            if(this.opened[i].gCost < lowestCost){
+                lowestCost = this.opened[i].gCost;
                 nodeIndex = i;
             }
         }
