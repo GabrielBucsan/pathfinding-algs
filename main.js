@@ -14,6 +14,14 @@ $(document).ready(()=>{
             Math.floor(Math.random() * mapSize.y));
     } while (endPosition.x != startPosition.x && endPosition.y != startPosition.y);
 
+    $('canvas')[0].addEventListener('click', function(event){
+        let x = Math.floor(event.offsetX / nodeSize);
+        let y = Math.floor(event.offsetY / nodeSize);
+        
+        endPosition = new Vector(x, y);
+        runAlg();
+    }, false);
+
     const canvas = new Canvas(nodeSize * mapSize.x, nodeSize * mapSize.y);
     const c = canvas.context;
 
@@ -32,6 +40,7 @@ $(document).ready(()=>{
                     nodeList[i].position.y + y
                 );
                 if(x == 0 && y == 0) continue;
+                if(x != 0 && y != 0) continue;
                 let neighbour = getNodeAt(neighbourPosition);
                 if(neighbour) neighbours.push(getNodeIndex(neighbourPosition));
             }
@@ -39,24 +48,32 @@ $(document).ready(()=>{
         nodeList[i].setNeighbours(neighbours);
     }
 
-    nodeList[getNodeIndex(startPosition)].setState('start');
-    nodeList[getNodeIndex(endPosition)].setState('end');
+    function runAlg(){
 
-    const a = new aStar(nodeList, startPosition, endPosition, mapSize);
-    let path = a.run();
+        for (let i = 0; i < nodeList.length; i++) {
+            nodeList[i].resetNode();
+        }
 
-    if(path != null){
-        for (let i = 0; i < path.length; i++) {
-            let index = getNodeIndex(path[i].position);
-            nodeList[index].setState('path');
+        nodeList[getNodeIndex(startPosition)].setState('start');
+        nodeList[getNodeIndex(endPosition)].setState('end');
+        const a = new aStar(nodeList, startPosition, endPosition, mapSize);
+        let path = a.run();
+    
+        if(path != null){
+            for (let i = 0; i < path.length; i++) {
+                let index = getNodeIndex(path[i].position);
+                nodeList[index].setState('path');
+            }
+        }
+    
+        canvas.update();
+        
+        for (let i = 0; i < nodeList.length; i++) {
+            nodeList[i].draw();
         }
     }
 
-    canvas.update();
-    
-    for (let i = 0; i < nodeList.length; i++) {
-        nodeList[i].draw();
-    }
+    runAlg();
 
     // MAIN FUNCTION
     // (function animate(){

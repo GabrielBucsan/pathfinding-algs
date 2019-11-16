@@ -8,7 +8,7 @@ class Node{
         this.size = size;
         this.c = context;
 
-        this.passable = (Math.random() > 0.4);
+        this.passable = (Math.random() > 0.35);
         this.state = 'nVis';
 
         this.parentNode = undefined;
@@ -27,10 +27,22 @@ class Node{
     setState(state){
         if(state == 'start' || state == 'end'){
             this.passable = true;
+            this.state = state;
         }
         if(this.state != 'start' && this.state != 'end'){
             this.state = state;
         }
+    }
+
+    resetNode(){
+        if(this.state != 'start')
+            this.state = undefined;
+        else
+            this.state = 'nVis';
+
+        this.parentNode = undefined;
+        this.gCost = Infinity;
+        this.hCost = Infinity;
     }
 
     draw(){
