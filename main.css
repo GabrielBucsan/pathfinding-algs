@@ -1,0 +1,35 @@
+html{
+    height: 100vh;
+    overflow: hidden;
+}
+
+body{
+    height: 100%;
+    width: 100%;
+    margin: 0;
+}
+
+.column, .row{
+    display: inline-flex;
+}
+
+.column{
+    flex-flow: column;
+}
+
+.row{
+    flex-flow: row;
+}
+
+.fill-width{
+    width: 100%;
+}
+
+
+.width-300px{
+    width: 300px;
+}
+
+.padding-10px{
+    padding: 10px;
+}
