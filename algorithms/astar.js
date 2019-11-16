@@ -1,9 +1,9 @@
 class aStar{
-    constructor(nodeList, startPoint, destinationPoint, mapSize){
-        this.nodeList = nodeList;
-        this.start = startPoint;
-        this.end = destinationPoint;
-        this.mapSize = mapSize;
+    constructor(map){
+        this.nodeList = map.nodeList;
+        this.start = map.startPosition;
+        this.end = map.endPosition;
+        this.mapSize = map.size;
     }
 
     run(){
