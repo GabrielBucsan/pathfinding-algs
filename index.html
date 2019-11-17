@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="main.css"/>
     <script src="utils/mathUtils.js"></script>
     <script src='utils/logger.js'></script>
+    <script src="utils/stepper.js"></script>
     <script src="objects/nodeType.js"></script>
     <script src="objects/node.js"></script>
     <script src="objects/nodeMap.js"></script>
@@ -20,21 +21,37 @@
 <body>
     <div class="row">
         <div class="column width-300px padding-10px">
-            <span>Search Algorithm</span>
+            <span class=title>Search Algorithm</span>
             <form class='row'>
                 <select name="algorithm" id="algorithm">
                     <option value="D">Dijkstra</option>
                     <option value="A" selected>A*</option>
                 </select>
             </form>
-            <span>Map Type</span>
+            <form oninput="iterations.value = iterationsRange.valueAsNumber" class='row'>
+                <input type="range" name="iterationsRange" id="iterationsRange" min="1" max="50" value="1" class='fill-width'>
+                <output name="iterations" for="iterationsRange">1</output>
+            </form>
+            <form class='row'>
+                <select name="executionType" id="executionType">
+                    <option value="A" selected>Automatic</option>
+                    <option value="T">Animated</option>
+                    <option value="M">Manually</option>
+                </select>
+            </form>
+            <div class="row">
+                <button class='control-button' type="button" id='runAlg'>Run</button>
+                <button class='control-button' type="button" id='pauseAlg'>Pause</button>
+                <button class='control-button' type="button" id='stepAlg'>Step</button>
+            </div>
+            <span class=title>Map Type</span>
             <form class="row">
                 <select name="mapType" id="mapType">
                     <option value="R">Random</option>
                     <option value="B" selected>Recursive Backtracking Maze</option>
                 </select>
-                <button type="button" id='generateMap'>Generate Map</button>
             </form>
+            <button class='full-button' type="button" id='generateMap'>Generate Map</button>
             <span id='logger'></span>
         </div>
         <canvas></canvas>

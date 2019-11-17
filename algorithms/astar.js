@@ -9,6 +9,20 @@ class AStar{
     }
 
     run(){
+
+        this.initializeAlgorithm();
+
+        while (this.opened.length > 0) {
+            let step = this.step();
+            if(step){
+                return step;
+            }
+        }
+        window.logger.displayMessage('A* algorithm was not able to find a solution for the given map.');
+        return null;
+    }
+
+    initializeAlgorithm(){
         window.logger.displayMessage('Starting A* algorithm execution...');
         window.logger.startTimer();
         this.opened = [];
@@ -19,41 +33,39 @@ class AStar{
         this.nodeList[startNodeIndex].hCost = this.getHCost(this.nodeList[startNodeIndex]);
 
         this.opened.push(this.nodeList[startNodeIndex]);
+    }
 
-        while (this.opened.length > 0) {
-            let currentNodeIndex = this.getIndexLowestCost();
-            let currentNode = this.opened[currentNodeIndex];
+    step(){
+        let currentNodeIndex = this.getIndexLowestCost();
+        let currentNode = this.opened[currentNodeIndex];
 
-            this.opened.splice(currentNodeIndex, 1);
-            this.closed.push(currentNode);
+        this.opened.splice(currentNodeIndex, 1);
+        this.closed.push(currentNode);
 
-            if(currentNode.position.x == this.end.x && currentNode.position.y == this.end.y) {
-                window.logger.endTimer('A* finished in ');
-                return this.reconstructPath(currentNode);
+        if(currentNode.position.x == this.end.x && currentNode.position.y == this.end.y) {
+            window.logger.endTimer('A* finished in ');
+            return this.reconstructPath(currentNode);
+        }
+
+        for (let i = 0; i < currentNode.neighbours.length; i++) {
+            let neighbour = this.nodeList[currentNode.neighbours[i]];
+
+            if(!neighbour.passable || this.closed.includes(neighbour)){
+                continue;
             }
 
-            for (let i = 0; i < currentNode.neighbours.length; i++) {
-                let neighbour = this.nodeList[currentNode.neighbours[i]];
-
-                if(!neighbour.passable || this.closed.includes(neighbour)){
-                    continue;
-                }
-
-                let gCost = currentNode.gCost + currentNode.position.distance(neighbour.position);
-                if(gCost < neighbour.gCost){
-                    this.nodeList[currentNode.neighbours[i]].setState(NodeType.VIS);
-                    this.nodeList[currentNode.neighbours[i]].gCost = gCost;
-                    this.nodeList[currentNode.neighbours[i]].hCost = this.getHCost(neighbour);
-                    this.nodeList[currentNode.neighbours[i]].parent = currentNode;
-                    
-                    if(!this.opened.includes(neighbour)){
-                        this.opened.push(this.nodeList[currentNode.neighbours[i]]);
-                    }                    
-                }
+            let gCost = currentNode.gCost + currentNode.position.distance(neighbour.position);
+            if(gCost < neighbour.gCost){
+                this.nodeList[currentNode.neighbours[i]].setState(NodeType.VIS);
+                this.nodeList[currentNode.neighbours[i]].gCost = gCost;
+                this.nodeList[currentNode.neighbours[i]].hCost = this.getHCost(neighbour);
+                this.nodeList[currentNode.neighbours[i]].parent = currentNode;
+                
+                if(!this.opened.includes(neighbour)){
+                    this.opened.push(this.nodeList[currentNode.neighbours[i]]);
+                }                    
             }
         }
-        window.logger.displayMessage('A* algorithm was not able to find a solution for the given map.');
-        return null;
     }
 
     reconstructPath(endNode){
