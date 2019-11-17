@@ -36,12 +36,8 @@ class Node{
     }
 
     resetNode(){
-        if(this.state != NodeType.START)
-            this.state = undefined;
-        else
-            this.state = NodeType.NVIS;
-
-        this.parentNode = undefined;
+        this.state = undefined;
+        this.parent = undefined;
         this.gCost = Infinity;
         this.hCost = Infinity;
     }
@@ -55,7 +51,7 @@ class Node{
         }else if(this.state == NodeType.PATH){
             color = '#ff2626'
         }else if(this.state == NodeType.VIS){
-            color = 'rgba(63, 191, 63, 0.31)';
+            color = 'rgba(0, 214, 185, 0.48)';
         }else{
             color = (this.passable)? '#323232' : '#000000';
         }

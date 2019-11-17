@@ -38,6 +38,13 @@ $(document).ready(()=>{
         map.buildMap(selectedMapType);
         run();
     });
+    $('#changePosMap').on('click', function () {
+        map.randomizeStartEnd();
+        map.resetMap();
+        canvas.update();
+        map.renderMap();
+        run();
+    });
     $('#printMap').on('click', function () {
         let download = document.createElement('a');
         download.href = canvas.canvas.toDataURL('image/png');

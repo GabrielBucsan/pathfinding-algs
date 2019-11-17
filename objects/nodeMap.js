@@ -10,6 +10,7 @@ class NodeMap{
     }
 
     randomMap(){
+        window.logger.displayMessage('Building map randomly...');
         window.logger.startTimer();
         this.nodeList = [];
         for (let y = 0; y < this.size.y; y++) {
@@ -42,6 +43,7 @@ class NodeMap{
     }
 
     recursiveBacktrackingMap(){
+        window.logger.displayMessage('Building map with Recursive Backtracking...');
         window.logger.startTimer();
         this.nodeList = [];
         for (let y = 0; y < this.size.y; y++) {
@@ -124,20 +126,28 @@ class NodeMap{
     }
 
     buildMap(mapType){
-        this.startPosition = this.generatePoint();
-
-        this.endPosition;
-        do {
-            this.endPosition = this.generatePoint();
-        } while (this.endPosition.x == this.startPosition.x && this.endPosition.y == this.startPosition.y);
         
         if(mapType == 'R'){
             this.randomMap();
         }else if(mapType == 'B'){
             this.recursiveBacktrackingMap();
         }
+
+        this.randomizeStartEnd();
         this.nodeList[this.getNodeIndex(this.startPosition)].setState(NodeType.START);
         this.nodeList[this.getNodeIndex(this.endPosition)].setState(NodeType.END);
+    }
+
+    randomizeStartEnd(){
+        this.startPosition;
+        do {
+            this.startPosition = this.generatePoint();
+        } while (!this.nodeList[this.getNodeIndex(this.startPosition)].passable);
+
+        this.endPosition;
+        do {
+            this.endPosition = this.generatePoint();
+        } while (this.endPosition.x == this.startPosition.x && this.endPosition.y == this.startPosition.y || !this.nodeList[this.getNodeIndex(this.endPosition)].passable);
     }
 
     renderMap(){

@@ -45,6 +45,10 @@ body {
     padding: 10px;
 }
 
+canvas{
+    height: fit-content;
+}
+
 #logger {
     margin-top: auto;
     border-top: 1px solid;
@@ -203,3 +207,4 @@ input[type=range]:focus::-ms-fill-lower {
 
 input[type=range]:focus::-ms-fill-upper {
     background: rgba(86, 86, 86, 0.78);
+}

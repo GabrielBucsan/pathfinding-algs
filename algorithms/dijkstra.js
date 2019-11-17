@@ -53,7 +53,7 @@ class Dijkstra{
             }
 
             let gCost = currentNode.gCost + currentNode.position.distance(neighbour.position);
-            if(gCost < neighbour.gCost){
+            if(gCost < neighbour.gCost || !this.opened.includes(neighbour)){
                 this.nodeList[currentNode.neighbours[i]].setState(NodeType.VIS);
                 this.nodeList[currentNode.neighbours[i]].gCost = gCost;
                 this.nodeList[currentNode.neighbours[i]].parent = currentNode;
