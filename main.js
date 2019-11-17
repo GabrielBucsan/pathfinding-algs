@@ -38,6 +38,12 @@ $(document).ready(()=>{
         map.buildMap(selectedMapType);
         run();
     });
+    $('#printMap').on('click', function () {
+        let download = document.createElement('a');
+        download.href = canvas.canvas.toDataURL('image/png');
+        download.download = 'map.png';
+        download.click();
+    });
     $('#runAlg').on('click', function () {
         map.resetMap();
         canvas.update();

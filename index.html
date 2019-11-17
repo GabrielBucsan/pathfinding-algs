@@ -19,8 +19,8 @@
     <script src="canvas.js"></script>
 </head>
 <body>
-    <div class="row">
-        <div class="column width-300px padding-10px">
+    <div class="row fill">
+        <div class="column width-300px padding-10px enable-scroll">
             <span class=title>Search Algorithm</span>
             <span class="sub-title">Algorithm</span>
             <form class='row'>
@@ -63,6 +63,7 @@
                 </select>
             </form>
             <button class='full-button' type="button" id='generateMap'>Generate Map</button>
+            <button class='full-button' type="button" id='printMap'>Download Map (PNG)</button>
             <span id='logger'></span>
         </div>
         <canvas></canvas>
