@@ -18,7 +18,6 @@ class Dijkstra{
             }
         }
         window.logger.displayMessage('Dijkstra algorithm was not able to find a solution for the given map.');
-        return null;
     }
 
     initializeAlgorithm(){
@@ -39,6 +38,11 @@ class Dijkstra{
 
         this.opened.splice(currentNodeIndex, 1);
         this.closed.push(currentNode);
+
+        if(!currentNode){
+            window.logger.displayMessage('Dijkstra algorithm was not able to find a solution for the given map.');
+            return [];
+        }
 
         if(currentNode.position.x == this.end.x && currentNode.position.y == this.end.y) {
             window.logger.endTimer('Dijkstra finished in ');

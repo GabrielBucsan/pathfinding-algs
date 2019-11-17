@@ -19,7 +19,6 @@ class AStar{
             }
         }
         window.logger.displayMessage('A* algorithm was not able to find a solution for the given map.');
-        return null;
     }
 
     initializeAlgorithm(){
@@ -41,6 +40,11 @@ class AStar{
 
         this.opened.splice(currentNodeIndex, 1);
         this.closed.push(currentNode);
+
+        if(!currentNode){
+            window.logger.displayMessage('A* algorithm was not able to find a solution for the given map.');
+            return [];
+        }
 
         if(currentNode.position.x == this.end.x && currentNode.position.y == this.end.y) {
             window.logger.endTimer('A* finished in ');

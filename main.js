@@ -169,19 +169,5 @@ $(document).ready(()=>{
                 map.renderMap();
             }
         }, 0);
-
-        $('#stepAlg').on('click', function(){
-            if(paused){
-                path = stepper.step();
-                if(path){
-                    map.setPath(path);
-                    canvas.update();
-                    map.renderMap();
-                    return;
-                }
-                canvas.update();
-                map.renderMap();
-            }
-        });
     }
 });
