@@ -18,16 +18,24 @@
 </head>
 <body>
     <div class="row">
-        <canvas></canvas>
         <div class="column width-300px padding-10px">
-            <span>Algorithm</span>
+            <span>Search Algorithm</span>
             <form class='row'>
                 <select name="algorithm" id="algorithm">
-                    <option value="D" selected>Dijkstra</option>
-                    <option value="A">A*</option>
+                    <option value="D">Dijkstra</option>
+                    <option value="A" selected>A*</option>
                 </select>
             </form>
+            <span>Map Type</span>
+            <form class="row">
+                <select name="mapType" id="mapType">
+                    <option value="R">Random</option>
+                    <option value="B" selected>Recursive Backtracking Maze</option>
+                </select>
+                <button id='generateMap'>Generate Map</button>
+            </form>
         </div>
+        <canvas></canvas>
     </div>
 </body>
 </html>

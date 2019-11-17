@@ -1,7 +1,22 @@
 $(document).ready(()=>{
+    const algorithm = $('#algorithm');
+    let selectedAlgorithm = algorithm[0].value;
+    $('#algorithm').on('input', function () {
+        selectedAlgorithm = algorithm[0].value;
+        map.resetMap();
+        run();
+    });
 
+    const mapType = $('#mapType');
+    let selectedMapType = mapType[0].value;
+    $('#mapType').on('input', function () {
+        selectedMapType = mapType[0].value;
+        map.buildMap(selectedMapType);
+        run();
+    });
+    
     const nodeSize = 5;
-    let windowSize = new Vector(window.innerWidth - 300, window.innerHeight);
+    let windowSize = new Vector(window.innerWidth - 320, window.innerHeight);
     
     windowSize.x = windowSize.x - (windowSize.x % nodeSize);
     windowSize.y = windowSize.y - (windowSize.y % nodeSize);
@@ -17,20 +32,9 @@ $(document).ready(()=>{
     // const mapSize = new Vector(111);
     const canvas = new Canvas(nodeSize * mapSize.x, nodeSize * mapSize.y);
     const c = canvas.context;
-    const map = new NodeMap(c, mapSize, nodeSize);
-
-    const algorithm = $('#algorithm');
-    let selectedAlgorithm = algorithm[0].value;
-
-    $('#algorithm').on('input', function () {
-        selectedAlgorithm = algorithm[0].value;
-        run();
-    });
+    const map = new NodeMap(c, mapSize, nodeSize, selectedMapType);
 
     function run(){
-
-        map.resetMap();
-
         let alg;
         if(selectedAlgorithm == 'A'){
             alg = new AStar(map);

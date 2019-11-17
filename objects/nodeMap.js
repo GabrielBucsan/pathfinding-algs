@@ -1,5 +1,5 @@
 class NodeMap{
-    constructor(context, size, nodeSize){
+    constructor(context, size, nodeSize, mapType){
         this.size = size;
         this.c = context;
 
@@ -12,10 +12,11 @@ class NodeMap{
             this.endPosition = this.generatePoint();
         } while (this.endPosition.x == this.startPosition.x && this.endPosition.y == this.startPosition.y);
 
-        this.generateMapBacktraking();
+        this.buildMap(mapType);
     }
 
-    initializeMap(){
+    randomMap(){
+        this.nodeList = [];
         for (let y = 0; y < this.size.y; y++) {
             for (let x = 0; x < this.size.x; x++) {
                 let passable = Math.random() > 0.35;
@@ -44,7 +45,8 @@ class NodeMap{
         }
     }
 
-    generateMapBacktraking(){
+    recursiveBacktrackingMap(){
+        this.nodeList = [];
         for (let y = 0; y < this.size.y; y++) {
             for (let x = 0; x < this.size.x; x++) {
                 let sx = x % 2 == 0;
@@ -121,8 +123,16 @@ class NodeMap{
                 currentNode = stack.pop();
             }
         };
+    }
 
-        console.log(this.nodeList);
+    buildMap(mapType){
+        if(mapType == 'R'){
+            this.randomMap();
+        }else if(mapType == 'B'){
+            this.recursiveBacktrackingMap();
+        }
+        this.nodeList[this.getNodeIndex(this.startPosition)].setState(NodeType.START);
+        this.nodeList[this.getNodeIndex(this.endPosition)].setState(NodeType.END);
     }
 
     renderMap(){
