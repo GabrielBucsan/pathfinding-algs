@@ -9,8 +9,8 @@ class AStar{
     }
 
     run(){
-        console.time('A* finished in ');
-        console.log('Starting A* algorithm execution...');
+        window.logger.displayMessage('Starting A* algorithm execution...');
+        window.logger.startTimer();
         this.opened = [];
         this.closed = [];
 
@@ -28,7 +28,7 @@ class AStar{
             this.closed.push(currentNode);
 
             if(currentNode.position.x == this.end.x && currentNode.position.y == this.end.y) {
-                console.timeEnd('A* finished in ');
+                window.logger.endTimer('A* finished in ');
                 return this.reconstructPath(currentNode);
             }
 
@@ -52,7 +52,7 @@ class AStar{
                 }
             }
         }
-        console.log('A* algorithm was not able to find a solution for the given map.');
+        window.logger.displayMessage('A* algorithm was not able to find a solution for the given map.');
         return null;
     }
 

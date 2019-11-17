@@ -33,3 +33,9 @@ body{
 .padding-10px{
     padding: 10px;
 }
+
+#logger{
+    margin-top: auto;
+    border-top: 1px solid;
+    padding-top: 10px;
+}

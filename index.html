@@ -8,6 +8,7 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <link rel="stylesheet" type="text/css" href="main.css"/>
     <script src="utils/mathUtils.js"></script>
+    <script src='utils/logger.js'></script>
     <script src="objects/nodeType.js"></script>
     <script src="objects/node.js"></script>
     <script src="objects/nodeMap.js"></script>
@@ -32,8 +33,9 @@
                     <option value="R">Random</option>
                     <option value="B" selected>Recursive Backtracking Maze</option>
                 </select>
-                <button id='generateMap'>Generate Map</button>
+                <button type="button" id='generateMap'>Generate Map</button>
             </form>
+            <span id='logger'></span>
         </div>
         <canvas></canvas>
     </div>

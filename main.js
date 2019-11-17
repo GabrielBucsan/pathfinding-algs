@@ -1,4 +1,5 @@
 $(document).ready(()=>{
+    window.logger = new Logger();
     const algorithm = $('#algorithm');
     let selectedAlgorithm = algorithm[0].value;
     $('#algorithm').on('input', function () {
@@ -11,6 +12,11 @@ $(document).ready(()=>{
     let selectedMapType = mapType[0].value;
     $('#mapType').on('input', function () {
         selectedMapType = mapType[0].value;
+        map.buildMap(selectedMapType);
+        run();
+    });
+
+    $('#generateMap').on('click', function () {
         map.buildMap(selectedMapType);
         run();
     });

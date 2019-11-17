@@ -16,6 +16,7 @@ class NodeMap{
     }
 
     randomMap(){
+        window.logger.startTimer();
         this.nodeList = [];
         for (let y = 0; y < this.size.y; y++) {
             for (let x = 0; x < this.size.x; x++) {
@@ -43,9 +44,11 @@ class NodeMap{
             }
             this.nodeList[i].setNeighbours(neighbours);
         }
+        window.logger.endTimer('Random map generated in');
     }
 
     recursiveBacktrackingMap(){
+        window.logger.startTimer();
         this.nodeList = [];
         for (let y = 0; y < this.size.y; y++) {
             for (let x = 0; x < this.size.x; x++) {
@@ -123,6 +126,7 @@ class NodeMap{
                 currentNode = stack.pop();
             }
         };
+        window.logger.endTimer('Recursive Backtracking map generated in');
     }
 
     buildMap(mapType){
