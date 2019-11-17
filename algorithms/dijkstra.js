@@ -9,6 +9,8 @@ class Dijkstra{
     }
 
     run(){
+        console.time('Dijkstra finished in ');
+        console.log('Starting Dijkstra algorithm execution...');
         this.opened = [];
         this.closed = [];
 
@@ -24,7 +26,10 @@ class Dijkstra{
             this.opened.splice(currentNodeIndex, 1);
             this.closed.push(currentNode);
 
-            if(currentNode.position.x == this.end.x && currentNode.position.y == this.end.y) return this.reconstructPath(currentNode);
+            if(currentNode.position.x == this.end.x && currentNode.position.y == this.end.y) {
+                console.timeEnd('Dijkstra finished in ');
+                return this.reconstructPath(currentNode);
+            }
 
             for (let i = 0; i < currentNode.neighbours.length; i++) {
                 let neighbour = this.nodeList[currentNode.neighbours[i]];
@@ -45,6 +50,7 @@ class Dijkstra{
                 }
             }
         }
+        console.log('Dijkstra algorithm was not able to find a solution for the given map.');
         return null;
     }
 

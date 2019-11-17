@@ -2,13 +2,14 @@ class Node{
     constructor(
         context,
         position,
-        size
+        size,
+        passable
     ){
         this.position = position;
         this.size = size;
         this.c = context;
+        this.passable = passable;
 
-        this.passable = (Math.random() > 0.35);
         this.state = NodeType.NVIS;
 
         this.parentNode = undefined;
@@ -54,7 +55,7 @@ class Node{
         }else if(this.state == NodeType.PATH){
             color = '#ff2626'
         }else if(this.state == NodeType.VIS){
-            color = 'rgba(209, 175, 243, 0.51)';
+            color = 'rgba(63, 191, 63, 0.31)';
         }else{
             color = (this.passable)? '#323232' : '#000000';
         }

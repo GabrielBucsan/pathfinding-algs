@@ -6,7 +6,15 @@ $(document).ready(()=>{
     windowSize.x = windowSize.x - (windowSize.x % nodeSize);
     windowSize.y = windowSize.y - (windowSize.y % nodeSize);
 
+    if(windowSize.x % 2 == 0){
+        windowSize.x -= nodeSize;
+    }
+    if(windowSize.y % 2 == 0){
+        windowSize.y -= nodeSize;
+    }
+
     const mapSize = new Vector(windowSize.x / nodeSize, windowSize.y / nodeSize);
+    // const mapSize = new Vector(111);
     const canvas = new Canvas(nodeSize * mapSize.x, nodeSize * mapSize.y);
     const c = canvas.context;
     const map = new NodeMap(c, mapSize, nodeSize);
