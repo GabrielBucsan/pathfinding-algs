@@ -56,23 +56,40 @@ $(document).ready(()=>{
         }
     });
 
-    const nodeSize = 10;
-    let windowSize = new Vector(window.innerWidth - 320, window.innerHeight);
+    const mapSizeElement = $('#mapSize');
+    let nodeSize = Number(mapSizeElement[0].value);
+    $('#mapSize').on('input', function () {
+        nodeSize = Number(mapSizeElement[0].value);
+        initializeScreen();
+    });
 
-    windowSize.x = windowSize.x - (windowSize.x % nodeSize);
-    windowSize.y = windowSize.y - (windowSize.y % nodeSize);
+    function initializeScreen(){
+        let windowSize = new Vector(window.innerWidth - 320, window.innerHeight);
+    
+        windowSize.x = (windowSize.x - (windowSize.x % nodeSize)) / nodeSize;
+        windowSize.y = (windowSize.y - (windowSize.y % nodeSize)) / nodeSize;
+    
+        if(windowSize.x % 2 == 0){
+            windowSize.x --;
+        }
+        if(windowSize.y % 2 == 0){
+            windowSize.y --;
+        }
 
-    if(windowSize.x % 2 == 0){
-        windowSize.x -= nodeSize;
+        mapSize = new Vector(windowSize.x, windowSize.y);
+        canvas = new Canvas(nodeSize * mapSize.x, nodeSize * mapSize.y);
+        c = canvas.context;
+        map = new NodeMap(c, mapSize, nodeSize, selectedMapType);
+
+        run();
     }
-    if(windowSize.y % 2 == 0){
-        windowSize.y -= nodeSize;
-    }
 
-    const mapSize = new Vector(windowSize.x / nodeSize, windowSize.y / nodeSize);
-    const canvas = new Canvas(nodeSize * mapSize.x, nodeSize * mapSize.y);
-    const c = canvas.context;
-    const map = new NodeMap(c, mapSize, nodeSize, selectedMapType);
+    let mapSize;
+    let canvas;
+    let c;
+    let map;
+
+    initializeScreen();
 
     function run(){
         let alg;
@@ -154,6 +171,4 @@ $(document).ready(()=>{
             }
         });
     }
-
-    run();
 });

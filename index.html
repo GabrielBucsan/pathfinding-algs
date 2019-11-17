@@ -22,15 +22,17 @@
     <div class="row">
         <div class="column width-300px padding-10px">
             <span class=title>Search Algorithm</span>
+            <span class="sub-title">Algorithm</span>
             <form class='row'>
                 <select name="algorithm" id="algorithm">
                     <option value="D">Dijkstra</option>
                     <option value="A" selected>A*</option>
                 </select>
             </form>
+            <span class="sub-title">Iterations per cycle</span>
             <form oninput="iterations.value = iterationsRange.valueAsNumber" class='row'>
-                <input type="range" name="iterationsRange" id="iterationsRange" min="1" max="50" value="1" class='fill-width'>
-                <output name="iterations" for="iterationsRange">1</output>
+                <input type="range" name="iterationsRange" id="iterationsRange" min="1" max="50" value="10" class='fill-width'>
+                <output name="iterations" for="iterationsRange">10</output>
             </form>
             <form class='row'>
                 <select name="executionType" id="executionType">
@@ -44,11 +46,20 @@
                 <button class='control-button' type="button" id='pauseAlg'>Pause</button>
                 <button class='control-button' type="button" id='stepAlg'>Step</button>
             </div>
-            <span class=title>Map Type</span>
+            <span class=title>Map</span>
+            <span class="sub-title">Map Type</span>
             <form class="row">
                 <select name="mapType" id="mapType">
                     <option value="R">Random</option>
                     <option value="B" selected>Recursive Backtracking Maze</option>
+                </select>
+            </form>
+            <span class="sub-title">Map Size</span>
+            <form class="row">
+                <select name="mapSize" id="mapSize">
+                    <option value="20">Small</option>
+                    <option value="10" selected>Medium</option>
+                    <option value="5">Large</option>
                 </select>
             </form>
             <button class='full-button' type="button" id='generateMap'>Generate Map</button>

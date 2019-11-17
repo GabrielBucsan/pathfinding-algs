@@ -5,12 +5,6 @@ class NodeMap{
 
         this.nodeList = [];
         this.nodeSize = nodeSize;
-        this.startPosition = this.generatePoint();
-
-        this.endPosition;
-        do {
-            this.endPosition = this.generatePoint();
-        } while (this.endPosition.x == this.startPosition.x && this.endPosition.y == this.startPosition.y);
 
         this.buildMap(mapType);
     }
@@ -130,6 +124,13 @@ class NodeMap{
     }
 
     buildMap(mapType){
+        this.startPosition = this.generatePoint();
+
+        this.endPosition;
+        do {
+            this.endPosition = this.generatePoint();
+        } while (this.endPosition.x == this.startPosition.x && this.endPosition.y == this.startPosition.y);
+        
         if(mapType == 'R'){
             this.randomMap();
         }else if(mapType == 'B'){
