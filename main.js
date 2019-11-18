@@ -7,6 +7,7 @@ $(document).ready(()=>{
         map.resetMap();
         canvas.update();
         map.renderMap();
+        togglePause();
         run();
     });
 
@@ -17,6 +18,7 @@ $(document).ready(()=>{
         map.resetMap();
         canvas.update();
         map.renderMap();
+        togglePause();
         run();
     });
 
@@ -27,6 +29,7 @@ $(document).ready(()=>{
         map.resetMap();
         canvas.update();
         map.renderMap();
+        togglePause();
         run();
     });
 
@@ -35,6 +38,7 @@ $(document).ready(()=>{
     $('#mapType').on('input', function () {
         selectedMapType = mapType[0].value;
         map.buildMap(selectedMapType);
+        togglePause();
         run();
     });
 
@@ -46,11 +50,13 @@ $(document).ready(()=>{
 
     $('#generateMap').on('click', function () {
         map.buildMap(selectedMapType);
+        togglePause();
         run();
     });
     $('#changePosMap').on('click', function () {
         map.randomizeStartEnd();
         map.resetMap();
+        togglePause();
         canvas.update();
         map.renderMap();
         run();
@@ -70,6 +76,10 @@ $(document).ready(()=>{
 
     let paused = false;
     $('#pauseAlg').on('click', function () {
+        togglePause();
+    });
+
+    function togglePause(){
         if(!paused){
             paused = true;
             $('#pauseAlg')[0].innerText = 'Resume';
@@ -77,7 +87,7 @@ $(document).ready(()=>{
             paused = false;
             $('#pauseAlg')[0].innerText = 'Pause';
         }
-    });
+    }
 
     const mapSizeElement = $('#mapSize');
     let nodeSize = Number(mapSizeElement[0].value);

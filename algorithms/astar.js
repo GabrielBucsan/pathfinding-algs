@@ -40,6 +40,7 @@ class AStar{
         let currentNode = this.opened[currentNodeIndex];
 
         this.opened.splice(currentNodeIndex, 1);
+        this.nodeList[this.map.getNodeIndex(currentNode.position)].setState(NodeType.VIS);
         this.closed.push(currentNode);
 
         if(!currentNode){
@@ -61,19 +62,22 @@ class AStar{
 
             let gCost = currentNode.gCost + currentNode.position.distance(neighbour.position);
             if(gCost < neighbour.gCost || !this.opened.includes(neighbour)){
-                this.nodeList[currentNode.neighbours[i]].setState(NodeType.VIS);
                 this.nodeList[currentNode.neighbours[i]].gCost = gCost;
                 this.nodeList[currentNode.neighbours[i]].hCost = this.heuristic(neighbour);
                 this.nodeList[currentNode.neighbours[i]].parent = currentNode;
                 
                 if(!this.opened.includes(this.nodeList[currentNode.neighbours[i]])){
                     this.opened.push(this.nodeList[currentNode.neighbours[i]]);
-                }                    
+                    this.nodeList[currentNode.neighbours[i]].setState(NodeType.OPN);
+                }else{
+                    this.nodeList[currentNode.neighbours[i]].setState(NodeType.VIS);
+                }
             }
         }
     }
 
     reconstructPath(endNode){
+        this.clearOpenedStates();
         let path = [];
         let parentNode = endNode.parent;
         path.push(parentNode);
@@ -82,6 +86,14 @@ class AStar{
             if(parentNode) path.push(parentNode);
         }
         return path;
+    }
+
+    clearOpenedStates(){
+        if(this.opened.length > 0){
+            for (let i = 0; i < this.opened.length; i++) {
+                this.nodeList[this.map.getNodeIndex(this.opened[i].position)].setState(NodeType.VIS);
+            }
+        }
     }
 
     heuristic(node){

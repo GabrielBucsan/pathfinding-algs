@@ -3,5 +3,6 @@ const NodeType = {
     END: 'end',
     PATH: 'path',
     VIS: 'vis',
-    NVIS: 'nvis'
+    NVIS: 'nvis',
+    OPN: 'open'
 }

@@ -52,6 +52,8 @@ class Node{
             color = '#ff2626'
         }else if(this.state == NodeType.VIS){
             color = 'rgba(0, 214, 185, 0.48)';
+        }else if(this.state == NodeType.OPN){
+            color = '#ffffff'
         }else{
             color = (this.passable)? '#323232' : '#000000';
         }
