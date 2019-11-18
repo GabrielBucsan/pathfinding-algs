@@ -1,6 +1,7 @@
 class AStar{
-    constructor(map){
+    constructor(map, heuristic){
         this.map = map;
+        this.selectedHeuristic = heuristic;
 
         this.nodeList = map.nodeList;
         this.start = map.startPosition;
@@ -29,7 +30,7 @@ class AStar{
 
         let startNodeIndex = this.map.getNodeIndex(this.start);
         this.nodeList[startNodeIndex].gCost = 0;
-        this.nodeList[startNodeIndex].hCost = this.getHCost(this.nodeList[startNodeIndex]);
+        this.nodeList[startNodeIndex].hCost = this.heuristic(this.nodeList[startNodeIndex]);
 
         this.opened.push(this.nodeList[startNodeIndex]);
     }
@@ -62,7 +63,7 @@ class AStar{
             if(gCost < neighbour.gCost || !this.opened.includes(neighbour)){
                 this.nodeList[currentNode.neighbours[i]].setState(NodeType.VIS);
                 this.nodeList[currentNode.neighbours[i]].gCost = gCost;
-                this.nodeList[currentNode.neighbours[i]].hCost = this.getHCost(neighbour);
+                this.nodeList[currentNode.neighbours[i]].hCost = this.heuristic(neighbour);
                 this.nodeList[currentNode.neighbours[i]].parent = currentNode;
                 
                 if(!this.opened.includes(this.nodeList[currentNode.neighbours[i]])){
@@ -83,10 +84,24 @@ class AStar{
         return path;
     }
 
-    getHCost(node){
-        let difX = this.end.x - node.position.x;
-        let difY = this.end.y - node.position.y;
+    heuristic(node){
+        if(this.selectedHeuristic == 'E'){
+            return this.euclidian(node);
+        }else if(this.selectedHeuristic == 'M'){
+            return this.manhattan(node);
+        }
+    }
+
+    euclidian(node){
+        let difX = node.position.x - this.end.x;
+        let difY = node.position.y - this.end.y;
         return Math.sqrt(difX * difX + difY * difY);
+    }
+
+    manhattan(node){
+        let difX = Math.abs(node.position.x - this.end.x);
+        let difY = Math.abs(node.position.y - this.end.y);
+        return difX + difY;
     }
 
     getIndexLowestCost(){

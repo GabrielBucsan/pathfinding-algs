@@ -29,6 +29,13 @@
                     <option value="A" selected>A*</option>
                 </select>
             </form>
+            <span class="sub-title">Heuristic</span>
+            <form class='row'>
+                <select name="heuristic" id="heuristic">
+                    <option value="E">Euclidian</option>
+                    <option value="M" selected>Manhattan</option>
+                </select>
+            </form>
             <span class="sub-title">Iterations per cycle</span>
             <form oninput="iterations.value = iterationsRange.valueAsNumber" class='row'>
                 <input type="range" name="iterationsRange" id="iterationsRange" min="1" max="50" value="10" class='fill-width'>

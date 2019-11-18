@@ -10,6 +10,16 @@ $(document).ready(()=>{
         run();
     });
 
+    const heuristic = $('#heuristic');
+    let selectedHeuristic = heuristic[0].value;
+    $('#heuristic').on('input', function () {
+        selectedHeuristic = heuristic[0].value;
+        map.resetMap();
+        canvas.update();
+        map.renderMap();
+        run();
+    });
+
     const executionType = $('#executionType');
     let selectedExecutionType = executionType[0].value;
     $('#executionType').on('input', function () {
@@ -107,7 +117,7 @@ $(document).ready(()=>{
     function run(){
         let alg;
         if(selectedAlgorithm == 'A'){
-            alg = new AStar(map);
+            alg = new AStar(map, selectedHeuristic);
         }else if(selectedAlgorithm == 'D'){
             alg = new Dijkstra(map);
         }
