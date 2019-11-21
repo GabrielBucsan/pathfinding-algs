@@ -5,10 +5,7 @@ $(document).ready(()=>{
     $('#algorithm').on('input', function () {
         resetExecution();
         selectedAlgorithm = algorithm[0].value;
-        map.resetMap();
-        canvas.update();
-        map.renderMap();
-        run();
+        noNameFunc();
     });
 
     const heuristic = $('#heuristic');
@@ -16,10 +13,7 @@ $(document).ready(()=>{
     $('#heuristic').on('input', function () {
         resetExecution();
         selectedHeuristic = heuristic[0].value;
-        map.resetMap();
-        canvas.update();
-        map.renderMap();
-        run();
+        noNameFunc();
     });
 
     const executionType = $('#executionType');
@@ -27,10 +21,7 @@ $(document).ready(()=>{
     $('#executionType').on('input', function () {
         resetExecution();
         selectedExecutionType = executionType[0].value;
-        map.resetMap();
-        canvas.update();
-        map.renderMap();
-        run();
+        noNameFunc();
     });
 
     const mapType = $('#mapType');
@@ -56,10 +47,7 @@ $(document).ready(()=>{
     $('#changePosMap').on('click', function () {
         resetExecution();
         map.randomizeStartEnd();
-        map.resetMap();
-        canvas.update();
-        map.renderMap();
-        run();
+        noNameFunc();
     });
     $('#printMap').on('click', function () {
         let download = document.createElement('a');
@@ -69,11 +57,19 @@ $(document).ready(()=>{
     });
     $('#runAlg').on('click', function () {
         resetExecution();
+       noNameFunc();
+    });
+
+    function noNameFunc(){
         map.resetMap();
+        render();
+        run();
+    }
+
+    function render(){
         canvas.update();
         map.renderMap();
-        run();
-    });
+    }
 
     let paused = false;
     $('#pauseAlg').on('click', function () {
@@ -86,11 +82,7 @@ $(document).ready(()=>{
         }else{
             paused = !paused;
         }
-        if(paused){
-            $('#pauseAlg')[0].innerText = 'Resume';
-        }else{
-            $('#pauseAlg')[0].innerText = 'Pause';
-        }
+        $('#pauseAlg')[0].innerText = (paused)? 'Resume' : 'Pause';
     }
 
     let interval;
@@ -158,8 +150,7 @@ $(document).ready(()=>{
         if(path != null){
             map.setPath(path);
         }
-        canvas.update();
-        map.renderMap();
+        render();
     }
 
     function manualRun(alg){
@@ -167,15 +158,15 @@ $(document).ready(()=>{
         const stepper = new Stepper(alg);
         let path;
         $('#stepAlg').on('click', function(){
-            path = stepper.step();
-            if(path){
-                map.setPath(path);
-                canvas.update();
-                map.renderMap();
-                return;
+            for (let i = 0; i < iterations; i++) {
+                path = stepper.step();
+                if(path){
+                    map.setPath(path);
+                    render();
+                    return;
+                }
             }
-            canvas.update();
-            map.renderMap();
+            render();
         });
     }
 
@@ -190,13 +181,11 @@ $(document).ready(()=>{
                     if(path){
                         map.setPath(path);
                         clearInterval(interval);
-                        canvas.update();
-                        map.renderMap();
+                        render();
                         return;
                     }
                 }
-                canvas.update();
-                map.renderMap();
+                render();
             }
         }, 0);
     }
