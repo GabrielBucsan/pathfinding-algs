@@ -3,42 +3,42 @@ $(document).ready(()=>{
     const algorithm = $('#algorithm');
     let selectedAlgorithm = algorithm[0].value;
     $('#algorithm').on('input', function () {
+        resetExecution();
         selectedAlgorithm = algorithm[0].value;
         map.resetMap();
         canvas.update();
         map.renderMap();
-        togglePause();
         run();
     });
 
     const heuristic = $('#heuristic');
     let selectedHeuristic = heuristic[0].value;
     $('#heuristic').on('input', function () {
+        resetExecution();
         selectedHeuristic = heuristic[0].value;
         map.resetMap();
         canvas.update();
         map.renderMap();
-        togglePause();
         run();
     });
 
     const executionType = $('#executionType');
     let selectedExecutionType = executionType[0].value;
     $('#executionType').on('input', function () {
+        resetExecution();
         selectedExecutionType = executionType[0].value;
         map.resetMap();
         canvas.update();
         map.renderMap();
-        togglePause();
         run();
     });
 
     const mapType = $('#mapType');
     let selectedMapType = mapType[0].value;
     $('#mapType').on('input', function () {
+        resetExecution();
         selectedMapType = mapType[0].value;
         map.buildMap(selectedMapType);
-        togglePause();
         run();
     });
 
@@ -49,14 +49,14 @@ $(document).ready(()=>{
     });
 
     $('#generateMap').on('click', function () {
+        resetExecution();
         map.buildMap(selectedMapType);
-        togglePause();
         run();
     });
     $('#changePosMap').on('click', function () {
+        resetExecution();
         map.randomizeStartEnd();
         map.resetMap();
-        togglePause();
         canvas.update();
         map.renderMap();
         run();
@@ -68,6 +68,7 @@ $(document).ready(()=>{
         download.click();
     });
     $('#runAlg').on('click', function () {
+        resetExecution();
         map.resetMap();
         canvas.update();
         map.renderMap();
@@ -79,14 +80,23 @@ $(document).ready(()=>{
         togglePause();
     });
 
-    function togglePause(){
-        if(!paused){
-            paused = true;
+    function togglePause(pause){
+        if(pause != undefined){
+            paused = pause;
+        }else{
+            paused = !paused;
+        }
+        if(paused){
             $('#pauseAlg')[0].innerText = 'Resume';
         }else{
-            paused = false;
             $('#pauseAlg')[0].innerText = 'Pause';
         }
+    }
+
+    let interval;
+    function resetExecution(){
+        clearInterval(interval);
+        togglePause(false);
     }
 
     const mapSizeElement = $('#mapSize');
@@ -173,7 +183,7 @@ $(document).ready(()=>{
         alg.initializeAlgorithm();
         const stepper = new Stepper(alg);
         let path;
-        let interval = setInterval(() => {
+        interval = setInterval(() => {
             if(!paused){
                 for (let i = 0; i < iterations; i++) {
                     path = stepper.step();
