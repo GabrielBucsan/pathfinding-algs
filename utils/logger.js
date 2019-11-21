@@ -2,7 +2,7 @@ class Logger{
     constructor(elementId, messageLimit){
         this.logger = $(`#${elementId || 'logger'}`)[0];
 
-        this.messageLimit = messageLimit || 10;
+        this.messageLimit = messageLimit || 5;
         this.messageList = [];
         this.prefix = '> ';
         this.displayMessage('Logger initialized');

@@ -36,7 +36,7 @@
                     <option value="M" selected>Manhattan</option>
                 </select>
             </form>
-            <span class="sub-title">Iterations per cycle</span>
+            <span class="sub-title">Iterations per step</span>
             <form oninput="iterations.value = iterationsRange.valueAsNumber" class='row'>
                 <input type="range" name="iterationsRange" id="iterationsRange" min="1" max="50" value="10" class='fill-width'>
                 <output name="iterations" for="iterationsRange">10</output>
@@ -57,8 +57,8 @@
             <span class="sub-title">Map Type</span>
             <form class="row">
                 <select name="mapType" id="mapType">
-                    <option value="R">Random</option>
-                    <option value="B" selected>Recursive Backtracking Maze</option>
+                    <option value="R" selected>Random</option>
+                    <option value="B">Recursive Backtracking Maze</option>
                 </select>
             </form>
             <span class="sub-title">Map Size</span>

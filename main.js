@@ -1,53 +1,51 @@
 $(document).ready(()=>{
     window.logger = new Logger();
-    const algorithm = $('#algorithm');
-    let selectedAlgorithm = algorithm[0].value;
+
+    const algorithm             = $('#algorithm');
+    const heuristic             = $('#heuristic');
+    const executionType         = $('#executionType');
+    const mapType               = $('#mapType');
+    const iterationsSlider      = $('#iterationsRange');
+
+    let selectedAlgorithm       = algorithm[0].value;
+    let selectedHeuristic       = heuristic[0].value;
+    let selectedExecutionType   = executionType[0].value;
+    let selectedMapType         = mapType[0].value;
+    let iterations              = Number(iterationsSlider[0].value);
+
     $('#algorithm').on('input', function () {
         resetExecution();
         selectedAlgorithm = algorithm[0].value;
-        noNameFunc();
+        run();
     });
-
-    const heuristic = $('#heuristic');
-    let selectedHeuristic = heuristic[0].value;
     $('#heuristic').on('input', function () {
         resetExecution();
         selectedHeuristic = heuristic[0].value;
-        noNameFunc();
+        run();
     });
-
-    const executionType = $('#executionType');
-    let selectedExecutionType = executionType[0].value;
     $('#executionType').on('input', function () {
         resetExecution();
         selectedExecutionType = executionType[0].value;
-        noNameFunc();
+        run();
     });
-
-    const mapType = $('#mapType');
-    let selectedMapType = mapType[0].value;
     $('#mapType').on('input', function () {
         resetExecution();
         selectedMapType = mapType[0].value;
         map.buildMap(selectedMapType);
-        run();
+        runAlg();
     });
-
-    const iterationsSlider = $('#iterationsRange');
-    let iterations = Number(iterationsSlider[0].value);
     $('#iterationsRange').on('input', function () {
         iterations = Number(iterationsSlider[0].value);
     });
-
     $('#generateMap').on('click', function () {
         resetExecution();
         map.buildMap(selectedMapType);
-        run();
+        runAlg();
     });
     $('#changePosMap').on('click', function () {
         resetExecution();
         map.randomizeStartEnd();
-        noNameFunc();
+        run();
     });
     $('#printMap').on('click', function () {
         let download = document.createElement('a');
@@ -57,13 +55,13 @@ $(document).ready(()=>{
     });
     $('#runAlg').on('click', function () {
         resetExecution();
-       noNameFunc();
+       run();
     });
 
-    function noNameFunc(){
+    function run(){
         map.resetMap();
         render();
-        run();
+        runAlg();
     }
 
     function render(){
@@ -104,19 +102,15 @@ $(document).ready(()=>{
         windowSize.x = (windowSize.x - (windowSize.x % nodeSize)) / nodeSize;
         windowSize.y = (windowSize.y - (windowSize.y % nodeSize)) / nodeSize;
     
-        if(windowSize.x % 2 == 0){
-            windowSize.x --;
-        }
-        if(windowSize.y % 2 == 0){
-            windowSize.y --;
-        }
+        if(windowSize.x % 2 == 0) windowSize.x --;
+        if(windowSize.y % 2 == 0) windowSize.y --;
 
         mapSize = new Vector(windowSize.x, windowSize.y);
         canvas = new Canvas(nodeSize * mapSize.x, nodeSize * mapSize.y);
         c = canvas.context;
         map = new NodeMap(c, mapSize, nodeSize, selectedMapType);
 
-        run();
+        runAlg();
     }
 
     let mapSize;
@@ -126,7 +120,7 @@ $(document).ready(()=>{
 
     initializeScreen();
 
-    function run(){
+    function runAlg(){
         let alg;
         if(selectedAlgorithm == 'A'){
             alg = new AStar(map, selectedHeuristic);
