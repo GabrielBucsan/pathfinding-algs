@@ -5,7 +5,8 @@ class BinaryHeap{
         this.order = 'min';
     }
 
-    insert(item){
+    insert(key, value){
+        let item = {key,value};
         this.reorganizeHeapToParent(this.heap.push(item) - 1);
     }
 
@@ -33,6 +34,13 @@ class BinaryHeap{
             }
         }
         console.error(`Key ${key} was no found in the heap!`);
+    }
+
+    contains(key){
+        for (let i = 0; i < this.heap.length; i++) {
+            if(this.heap[i].key == key) return true;
+        }
+        return false;
     }
 
     reorganizeHeapToParent(index){
