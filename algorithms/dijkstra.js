@@ -33,6 +33,10 @@ class Dijkstra{
     }
 
     step(){
+        if(this.opened.heap.length == 0){
+            window.logger.displayMessage('Dijkstra algorithm was not able to find a solution for the given map.');
+            return [];
+        }
         let currentNodeIndex = this.opened.extract().key;
         let currentNode = this.nodeList[currentNodeIndex];
 
