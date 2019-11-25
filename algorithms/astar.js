@@ -89,7 +89,7 @@ class AStar{
     clearOpenedStates(){
         if(this.opened.heap.length > 0){
             for (let i = 0; i < this.opened.heap.length; i++) {
-                this.nodeList[this.opened.heap[i].key].setState(NodeType.VIS);
+                this.nodeList[this.opened.heap[i].key].setState();
             }
         }
     }
@@ -112,17 +112,5 @@ class AStar{
         let difX = Math.abs(node.position.x - this.end.x);
         let difY = Math.abs(node.position.y - this.end.y);
         return difX + difY;
-    }
-
-    getIndexLowestCost(){
-        let lowestCost = Infinity;
-        let nodeIndex;
-        for (let i = 0; i < this.opened.length; i++) {
-            if(this.opened[i].fCost() < lowestCost){
-                lowestCost = this.opened[i].fCost();
-                nodeIndex = i;
-            }
-        }
-        return nodeIndex;
     }
 }

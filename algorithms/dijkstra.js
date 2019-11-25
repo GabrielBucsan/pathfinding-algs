@@ -11,7 +11,7 @@ class Dijkstra{
     run(){
         this.initializeAlgorithm();
 
-        while (this.opened.length > 0) {
+        while (this.opened.heap.length > 0) {
             let step = this.step();
             if(step){
                 return step;
@@ -23,22 +23,21 @@ class Dijkstra{
     initializeAlgorithm(){
         window.logger.displayMessage('Starting Dijkstra algorithm execution...');
         window.logger.startTimer();
-        this.opened = [];
-        this.closed = [];
+        this.opened = new BinaryHeap();
+        this.closed = new Map();
 
         let startNodeIndex = this.map.getNodeIndex(this.start);
         this.nodeList[startNodeIndex].gCost = 0;
 
-        this.opened.push(this.nodeList[startNodeIndex]);
+        this.opened.insert(startNodeIndex, this.nodeList[startNodeIndex].gCost);
     }
 
     step(){
-        let currentNodeIndex = this.getIndexLowestCost();
-        let currentNode = this.opened[currentNodeIndex];
+        let currentNodeIndex = this.opened.extract().key;
+        let currentNode = this.nodeList[currentNodeIndex];
 
-        this.opened.splice(currentNodeIndex, 1);
-        this.nodeList[this.map.getNodeIndex(currentNode.position)].setState(NodeType.VIS);
-        this.closed.push(currentNode);
+        this.nodeList[currentNodeIndex].setState(NodeType.VIS);
+        this.closed.set(currentNodeIndex, currentNodeIndex);
 
         if(!currentNode){
             window.logger.displayMessage('Dijkstra algorithm was not able to find a solution for the given map.');
@@ -53,17 +52,17 @@ class Dijkstra{
         for (let i = 0; i < currentNode.neighbours.length; i++) {
             let neighbour = this.nodeList[currentNode.neighbours[i]];
 
-            if(!neighbour.passable || this.closed.includes(neighbour)){
+            if(!neighbour.passable || this.closed.get(currentNode.neighbours[i])){
                 continue;
             }
 
             let gCost = currentNode.gCost + currentNode.position.distance(neighbour.position);
-            if(gCost < neighbour.gCost || !this.opened.includes(neighbour)){
+            if(gCost < neighbour.gCost || !this.opened.contains(currentNode.neighbours[i])){
                 this.nodeList[currentNode.neighbours[i]].gCost = gCost;
                 this.nodeList[currentNode.neighbours[i]].parent = currentNode;
                 
-                if(!this.opened.includes(neighbour)){
-                    this.opened.push(this.nodeList[currentNode.neighbours[i]]);
+                if(!this.opened.contains(currentNode.neighbours[i])){
+                    this.opened.insert(currentNode.neighbours[i], this.nodeList[currentNode.neighbours[i]].gCost);
                     this.nodeList[currentNode.neighbours[i]].setState(NodeType.OPN);
                 }else{
                     this.nodeList[currentNode.neighbours[i]].setState(NodeType.VIS);
@@ -85,22 +84,10 @@ class Dijkstra{
     }
 
     clearOpenedStates(){
-        if(this.opened.length > 0){
-            for (let i = 0; i < this.opened.length; i++) {
-                this.nodeList[this.map.getNodeIndex(this.opened[i].position)].setState(NodeType.VIS);
+        if(this.opened.heap.length > 0){
+            for (let i = 0; i < this.opened.heap.length; i++) {
+                this.nodeList[this.opened.heap[i].key].setState();
             }
         }
-    }
-
-    getIndexLowestCost(){
-        let lowestCost = Infinity;
-        let nodeIndex;
-        for (let i = 0; i < this.opened.length; i++) {
-            if(this.opened[i].gCost < lowestCost){
-                lowestCost = this.opened[i].gCost;
-                nodeIndex = i;
-            }
-        }
-        return nodeIndex;
     }
 }
