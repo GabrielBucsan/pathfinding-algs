@@ -51,13 +51,13 @@ class Node{
         }else if(this.state == NodeType.PATH){
             color = '#ff2626'
         }else if(this.state == NodeType.VIS){
-            color = 'rgba(0, 214, 185, 0.48)';
+            color = '#16df73';
         }else if(this.state == NodeType.OPN){
             color = '#ffffff'
         }else{
-            color = (this.passable)? '#323232' : '#000000';
+            color = (this.passable)? '#494949' : '#000000';
         }
-        if(color != '#323232'){
+        if(color != '#494949'){
             this.c.fillStyle = color;
             this.c.fillRect(this.position.x * this.size, this.position.y * this.size, this.size, this.size);
         }
